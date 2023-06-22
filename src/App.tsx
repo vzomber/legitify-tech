@@ -1,8 +1,12 @@
+import { MainScreen } from 'components';
+import { DndProvider } from 'react-dnd';
+import { HTML5Backend } from 'react-dnd-html5-backend';
+
 function App() {
   return (
-    <div className={'w-screen h-screen flex items-center justify-center'}>
-      <h1>Hello friend...</h1>
-    </div>
+    <DndProvider backend={HTML5Backend}>
+      <MainScreen />
+    </DndProvider>
   );
 }
 
