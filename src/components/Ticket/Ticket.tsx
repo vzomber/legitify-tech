@@ -2,10 +2,16 @@ import { FC } from 'react';
 import { useDrag } from 'react-dnd';
 import { ITicket } from './types';
 
-export const Ticket: FC<ITicket> = ({ title, description, id }) => {
+export const Ticket: FC<ITicket> = ({
+  title,
+  description,
+  id,
+  columnType,
+  orderNumber,
+}) => {
   const [{ isDragging }, dragRef] = useDrag(() => ({
     type: 'TICKET',
-    item: { title, description, id },
+    item: { title, description, id, columnType, orderNumber },
     collect: (monitor) => ({
       isDragging: !!monitor.isDragging(),
     }),
