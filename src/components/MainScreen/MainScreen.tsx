@@ -21,6 +21,12 @@ export const MainScreen = () => {
     });
   };
 
+  const removeTicket = (id: string) => {
+    setTickets((prevTickets) =>
+      prevTickets.filter((ticket) => ticket.id !== id)
+    );
+  };
+
   const addNewTicket = (
     title: string,
     description: string,
@@ -55,6 +61,7 @@ export const MainScreen = () => {
           tickets={tickets}
           onTicketDrop={changeTicketColumn}
           onAddNewTicket={addNewTicket}
+          onRemoveTicket={removeTicket}
         />
       ))}
     </div>

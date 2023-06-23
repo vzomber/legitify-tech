@@ -6,10 +6,15 @@ export enum ColumnTypesEnum {
   InProgress = 'In Progress',
   Published = 'Published',
 }
+
+export enum DraggableItemsEnum {
+  TICKET = 'TICKET',
+}
 export interface IColumn {
   name: string;
   tickets: ITicket[];
   columnType: ColumnTypesEnum;
+  onRemoveTicket: (ticketId: string) => void;
   onTicketDrop: (ticketId: string, columnType: ColumnTypesEnum) => void;
   onAddNewTicket: (
     title: string,

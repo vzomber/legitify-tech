@@ -7,3 +7,7 @@ export interface ITicket {
   columnType: ColumnTypesEnum;
   orderNumber: number;
 }
+
+export interface ITicketProps extends ITicket {
+  onRemoveTicket: (ticketId: string) => void;
+}

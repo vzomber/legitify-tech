@@ -1,8 +1,8 @@
+import { FC } from 'react';
 import { Ticket } from 'components/Ticket';
 import { ITicket } from 'components/Ticket/types';
-import { FC, SyntheticEvent } from 'react';
 import { useDrop } from 'react-dnd';
-import { IColumn } from './types';
+import { DraggableItemsEnum, IColumn } from './types';
 
 export const Column: FC<IColumn> = ({
   name,
@@ -10,17 +10,14 @@ export const Column: FC<IColumn> = ({
   tickets,
   onTicketDrop,
   onAddNewTicket,
+  onRemoveTicket,
   isCreatable = false,
 }) => {
-  const [{ isOver }, dropRef] = useDrop(() => ({
-    accept: 'TICKET',
+  const [, dropRef] = useDrop(() => ({
+    accept: DraggableItemsEnum.TICKET,
     drop: (item: ITicket) => {
-      console.log(item);
       onTicketDrop(item.id, columnType);
     },
-    collect: (monitor) => ({
-      isOver: !!monitor.isOver(),
-    }),
   }));
 
   const submitHandler: React.FormEventHandler<HTMLFormElement> | undefined = (
@@ -28,11 +25,13 @@ export const Column: FC<IColumn> = ({
   ) => {
     event.preventDefault();
     const target = event.target as Record<string, any>;
-    const ticketData = target[0].value || '';
+    const ticketData = target[0].value;
 
-    const [title, description] = ticketData.split('|');
-    onAddNewTicket(title, description, columnType);
-    target[0].value = '';
+    if (ticketData) {
+      const [title, description] = ticketData.split('|');
+      onAddNewTicket(title, description, columnType);
+      target[0].value = '';
+    }
   };
 
   return (
@@ -48,7 +47,11 @@ export const Column: FC<IColumn> = ({
           .filter((ticket) => ticket.columnType === columnType)
           .sort((a, b) => a.orderNumber - b.orderNumber)
           .map((ticket) => (
-            <Ticket key={ticket.id} {...ticket} />
+            <Ticket
+              key={ticket.id}
+              {...ticket}
+              onRemoveTicket={onRemoveTicket}
+            />
           ))}
       </div>
       {isCreatable && (
