@@ -38,10 +38,10 @@ export const Column: FC<IColumn> = ({
     <div
       ref={dropRef}
       className={
-        'mx-2 flex h-full w-64 flex-col overflow-hidden rounded border border-primary p-2 py-4'
+        'mx-2 flex h-full w-64 flex-col overflow-hidden rounded-lg border border-white bg-snow p-2 py-4'
       }
     >
-      <p className={'pb-2 font-semibold'}>{name}</p>
+      <p className={'pb-2 font-semibold text-ash'}>{name}</p>
       <div className={'grid grid-cols-1 gap-3 overflow-scroll'}>
         {tickets
           .filter((ticket) => ticket.columnType === columnType)
@@ -61,10 +61,17 @@ export const Column: FC<IColumn> = ({
             name="newTicketData"
             rows={3}
             cols={33}
-            className={'w-full rounded border border-primary py-2 px-1'}
+            className={
+              'w-full rounded-lg border border-primary bg-white p-2 placeholder:text-sm'
+            }
             placeholder={'Title | Description'}
           />
-          <button type="submit" className={'ml-auto block border'}>
+          <button
+            type="submit"
+            className={
+              'ml-auto block rounded-lg border bg-primary px-2 py-1 text-white hover:bg-dark'
+            }
+          >
             Add task
           </button>
         </form>

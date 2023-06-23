@@ -51,7 +51,11 @@ export const MainScreen = () => {
   };
 
   return (
-    <div className={'flex h-screen w-screen items-center justify-center py-36'}>
+    <div
+      className={
+        'flex h-screen w-screen items-center justify-center bg-primary py-36'
+      }
+    >
       {columns.map(({ name, type, isCreatable }) => (
         <Column
           key={name}
