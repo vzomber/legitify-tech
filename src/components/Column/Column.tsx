@@ -1,6 +1,6 @@
 import { Ticket } from 'components/Ticket';
 import { ITicket } from 'components/Ticket/types';
-import { FC } from 'react';
+import { FC, SyntheticEvent } from 'react';
 import { useDrop } from 'react-dnd';
 import { IColumn } from './types';
 
@@ -9,6 +9,8 @@ export const Column: FC<IColumn> = ({
   columnType,
   tickets,
   onTicketDrop,
+  onAddNewTicket,
+  isCreatable = false,
 }) => {
   const [{ isOver }, dropRef] = useDrop(() => ({
     accept: 'TICKET',
@@ -20,6 +22,18 @@ export const Column: FC<IColumn> = ({
       isOver: !!monitor.isOver(),
     }),
   }));
+
+  const submitHandler: React.FormEventHandler<HTMLFormElement> | undefined = (
+    event
+  ) => {
+    event.preventDefault();
+    const target = event.target as Record<string, any>;
+    const ticketData = target[0].value || '';
+
+    const [title, description] = ticketData.split('|');
+    onAddNewTicket(title, description, columnType);
+    target[0].value = '';
+  };
 
   return (
     <div
@@ -37,6 +51,21 @@ export const Column: FC<IColumn> = ({
             <Ticket key={ticket.id} {...ticket} />
           ))}
       </div>
+      {isCreatable && (
+        <form className={'mt-4'} onSubmit={submitHandler}>
+          <textarea
+            id="newTicket"
+            name="newTicketData"
+            rows={3}
+            cols={33}
+            className={'w-full rounded border border-primary py-2 px-1'}
+            placeholder={'Title | Description'}
+          />
+          <button type="submit" className={'ml-auto block border'}>
+            Add task
+          </button>
+        </form>
+      )}
     </div>
   );
 };
