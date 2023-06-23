@@ -55,7 +55,7 @@ export const Column: FC<IColumn> = ({
           ))}
       </div>
       {isCreatable && (
-        <form className={'mt-4'} onSubmit={submitHandler}>
+        <form className={'mt-auto pt-2'} onSubmit={submitHandler}>
           <textarea
             id="newTicket"
             name="newTicketData"
